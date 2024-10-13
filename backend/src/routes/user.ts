@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
 import { PrismaClient } from "@prisma/client/edge";
+import { SignUp,SignIn } from "@arush_012/medium-common";
 
 
 export const userRouter = new Hono<{
@@ -14,7 +15,15 @@ export const userRouter = new Hono<{
 
 userRouter.post('/signup', async (c) => {
     const body = await c.req.json()
-  
+    const {success} = SignUp.safeParse(body);
+
+    if(!success){
+      c.status(411);
+      return c.json({
+        message:"Invalid Credentials"
+      })
+    }
+
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
@@ -34,14 +43,22 @@ userRouter.post('/signup', async (c) => {
   
     } catch (error) {
       c.status(411)
-      return c.text("Invalid Credentials")
+      return c.text("Unable to update Credentials. Try Again")
     }
   
     
   })
   userRouter.post('/signin', async (c) => {
     const body = await c.req.json()
-  
+    const {success} = SignIn.safeParse(body);
+
+    if(!success){
+      c.status(411);
+      return c.json({
+        message:"Incorrect Username or Password"
+      })
+    }
+    
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
