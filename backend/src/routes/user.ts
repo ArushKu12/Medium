@@ -39,11 +39,14 @@ userRouter.post('/signup', async (c) => {
      const jwt = await sign({
       id:user.id
      },c.env.JWT_SECRET)
-    return c.text(jwt)
+    return c.json({
+      success: true,
+      jwt:jwt
+    })
   
     } catch (error) {
       c.status(411)
-      return c.text("Unable to update Credentials. Try Again")
+      return c.text("Unable to update Credentials. Database Error")
     }
   
     
@@ -80,7 +83,10 @@ userRouter.post('/signup', async (c) => {
      const jwt = await sign({
       id:user.id
      },c.env.JWT_SECRET)
-    return c.text(jwt)
+    return c.json({
+      success:true,
+      jwt:jwt
+    })
   
     } catch (error) {
       c.status(411)

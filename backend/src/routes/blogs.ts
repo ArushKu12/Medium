@@ -16,7 +16,7 @@ export const blogRouter = new Hono<{
 
 blogRouter.use("/*",async (c,next) => {
     //extract userId and pass it down
-    const token = c.req.header("authorization") || "";
+    const token = c.req.header("Authorization") || "";
     try {
         const user = await verify(token,c.env.JWT_SECRET) as {id:string};
 
@@ -50,12 +50,12 @@ blogRouter.post('/', async (c) => {
         message:"Incorrect Username or Password"
       })
     }
-
+    try {
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
       }).$extends(withAccelerate())
     
-    const authorId = c.get("userId")
+        const authorId = c.get("userId")
       
         const blog = await prisma.blog.create({
             data:{
@@ -66,8 +66,17 @@ blogRouter.post('/', async (c) => {
         })
 
         return c.json({
+            success:true,
             id:blog.id
       })
+    } catch (error) {
+        c.status(411)
+        c.json({
+            success:false,
+            message:"Database Error"
+        })
+    }
+    
 })
      
     
@@ -103,6 +112,7 @@ blogRouter.put('/', async (c) => {
         })
 
         return c.json({
+            success:true,
             id:blog.id
       })
   })
@@ -113,10 +123,22 @@ blogRouter.get('/bulk', async (c) => {
         datasourceUrl: c.env.DATABASE_URL,
       }).$extends(withAccelerate())
     
-      const blogs = await prisma.blog.findMany();
+      const blogs = await prisma.blog.findMany({
+        select:{
+            id:true,
+            title:true,
+            content:true,
+            author:{
+                select:{
+                    name:true
+                }
+            }
+        }
+      });
     
       return c.json({
-        blogs
+        success:true,
+        blogs:blogs
       })
   })
 
@@ -134,11 +156,22 @@ blogRouter.get('/:id',async (c) => {
             where:{
                 id: Number(id)
             },
+            select:{
+                id:true,
+                title:true,
+                content:true,
+                author:{
+                    select:{
+                        name:true
+                    }
+                }
+            }
             
         })
 
         return c.json({
-            blog
+            success:true,
+            blog:blog
       })
     } catch (error) {
         c.status(411)
