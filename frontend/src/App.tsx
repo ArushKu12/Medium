@@ -6,6 +6,7 @@ import { SignIn } from './pages/SignIn'
 import { Blog } from './pages/Blog'
 import {Blogs} from "./pages/Blogs"
 import { Publish } from './pages/Publish'
+import PrivateRoute from './components/PrivateRoute'
 
 function App() {
   
@@ -15,9 +16,9 @@ function App() {
       <Routes>
         <Route path='/' element={<SignUp />}></Route>
         <Route path='/signin' element={<SignIn />}></Route>
-        <Route path='/blog/:id' element={<Blog />}></Route>
-        <Route path='/blogs' element={<Blogs />}></Route>
-        <Route path='/publish' element={<Publish />} ></Route>
+        <Route path='/blog/:id' element={<PrivateRoute><Blog /></PrivateRoute>}></Route>
+        <Route path='/blogs' element={<PrivateRoute><Blogs /></PrivateRoute>}></Route>
+        <Route path='/publish' element={<PrivateRoute><Publish /></PrivateRoute>} ></Route>
       </Routes>
     </>
   )

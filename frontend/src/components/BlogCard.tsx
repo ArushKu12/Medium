@@ -53,7 +53,7 @@ export function Avatar({
   return (
     <div
       className={`relative inline-flex items-center justify-center ${
-        size === "small" ? "w-7 h-7" : "w-9 h-9"
+        size === "small" ? "w-7 h-7" : "w-9 h-9 hover:border-2 border-gray-500"
       } overflow-hidden bg-gray-300 rounded-full dark:bg-gray-600`}
     >
       <span className="font-medium text-gray-600 dark:text-gray-300">

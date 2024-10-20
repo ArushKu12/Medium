@@ -5,8 +5,10 @@ import { BACKEND_URL } from "../config";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { createBlog } from "@arush_012/medium-common";
+import { Spinner } from "../components/Spinner";
 
 export const Publish = () => {
+    const [loading,setLoading] = useState(false)
   const[blog,setBlog] = useState<createBlog>({
     title:"",
     content:""
@@ -20,22 +22,44 @@ export const Publish = () => {
 
     }
   async function publishBlog () {
-    
-    try {
-        const response = await axios.post(`${BACKEND_URL}/api/v1/blog`,{title:blog.title,content:blog.content},{
-            headers:{
-                Authorization: localStorage.getItem('token')
-            }
-        }
-               
-        )
-        if(response.data.success){
-         toast.success("Blog Published")
-         navigate('/blogs')   
-        }
-    } catch (error) {
-        toast.error("Failed to publish Blog, Try again")
+    setLoading(true)
+    if(blog.content.length == 0 || blog.title.length == 0){
+        setLoading(false)
+        toast.error("Cannot publish Empty Blogs")
     }
+    else{
+        try {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/blog`,{title:blog.title,content:blog.content},{
+                headers:{
+                    Authorization: localStorage.getItem('token')
+                }
+            }
+                   
+            )
+            if(response.data.success){
+             toast.success("Blog Published")
+             navigate('/blogs') 
+             setLoading(false)  
+            }
+        } catch (error) {
+            setLoading(false)
+            toast.error("Failed to publish Blog, Try again")
+        }
+    }
+    
+  }
+
+  if(loading){
+    return  <div>
+    <AppBar />
+    <div className="flex flex-col justify-center items-center h-[80vh] w-screen ">
+    <div className="font-semibold">
+        Publishing...
+    </div>
+      <Spinner />
+      
+  </div>
+  </div>
   }
 
   return (

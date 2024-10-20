@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 
+
 export interface Blog {
     "id": number,
     "title": string,
@@ -55,3 +56,6 @@ export const useBlogs = () => {
         blogs
     }
 }
+
+
+

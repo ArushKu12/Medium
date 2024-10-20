@@ -4,11 +4,12 @@ import { SignUp } from "@arush_012/medium-common"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
 import toast from "react-hot-toast"
+import { Spinner } from "./Spinner"
 
 export const Auth = ({type} : {type:"signup" | "signin"}) => {
     
     const navigate = useNavigate();
-
+    const [loading,SetLoading] = useState(false)
     const [postInputs,setPostInputs] = useState<SignUp>({
         name:"",
         username:"",
@@ -16,6 +17,7 @@ export const Auth = ({type} : {type:"signup" | "signin"}) => {
     })
 
     async function SendRequest() {
+        SetLoading(true)
         try {
            const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`,postInputs)
            if(response.data.success ){
@@ -23,11 +25,19 @@ export const Auth = ({type} : {type:"signup" | "signin"}) => {
             localStorage.setItem('token',jwt)
             toast.success(`${type === "signup" ? "Logged In Successfully" : "Signed In Successfully"}`)
             navigate("/blogs")
+            SetLoading(false)
            }
            
         } catch (error) {
+            SetLoading(false)
             toast.error(`${type === "signin" ? "Sign In" : "Sign up"} Failed`)
         }
+    }
+
+    if(loading){
+        return <div className="flex justify-center items-center h-screen w-half">
+            <Spinner />
+        </div>
     }
 
     return <div className="h-screen flex justify-center items-center flex-col">
