@@ -35,7 +35,7 @@ export const Blogs = () => {
       <AppBar />
 
       <div className="flex justify-center">
-        <div className=" max-w-xl">
+        <div className=" max-w-xl w-full">
           {blogs.map((blog) =>
           <BlogCard id={String(blog.id)} key={String(blog.id)} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate="22 Feb 2024"/> 
         )}

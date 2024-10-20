@@ -3,6 +3,7 @@ import {PrismaClient} from "@prisma/client/edge"
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
 import { createBlog,updateBlog } from "@arush_012/medium-common";
+import { auth } from "hono/utils/basic-auth";
 
 export const blogRouter = new Hono<{
     Bindings:{
@@ -142,6 +143,35 @@ blogRouter.get('/bulk', async (c) => {
       })
   })
 
+blogRouter.get("/personal", async (c) => {
+    const authorId = c.get('userId');
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+      }).$extends(withAccelerate())
+
+    try {
+        const blogs = await prisma.blog.findMany({
+            where:{
+                author:{
+                    id:Number(authorId)
+                }
+            }
+        })
+
+        c.status(200)
+        return c.json({
+            success:true,
+            blogs:blogs
+        })
+    } catch (error) {
+        c.status(403)
+        return c.json({
+            success:false,
+            message:"Author Id incorrect"
+    })
+    }
+})
 
 blogRouter.get('/:id',async (c) => {
     const id = c.req.param("id");
