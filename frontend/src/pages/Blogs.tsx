@@ -21,6 +21,15 @@ export const Blogs = () => {
         
         
     }
+    if(blogs.length == 0){
+      return <div>
+        <AppBar />
+        <div className="flex justify-center items-center w-screen h-[80vh] text-3xl font-semibold">
+        No Blogs Published, You can be the first
+      </div>
+      </div>
+      
+    }
   return (
     <div>
       <AppBar />

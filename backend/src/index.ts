@@ -11,7 +11,7 @@ const app = new Hono<{
 }>()
 
 app.use("/*", cors({
-  origin:"http://localhost:5173"
+  origin:["http://localhost:5173","https://medium-tau-two.vercel.app"]
 }))
 
 app.route("/api/v1/user",userRouter)
