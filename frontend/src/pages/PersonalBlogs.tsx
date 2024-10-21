@@ -1,14 +1,15 @@
 import { AppBar } from "../components/AppBar";
-import { BlogCard} from "../components/BlogCard";
+import { BlogCard, personal } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
-import { useBlogs } from "../hooks";
+import { usePersonalBlogs } from "../hooks";
 
-export const Blogs = () => {
-    const {loading,blogs} = useBlogs()
+export const PersonalBlogs = () => {
+
+    const {loading,blogs} = usePersonalBlogs()
 
     if(loading){
-        return <div>
-          <AppBar />
+        return <div className="">
+          <AppBar  />
           <div className="flex flex-col justify-center items-center h-screen w-screen max-w-screen-xl pt-[23rem]">
             <BlogSkeleton />
             <BlogSkeleton />
@@ -37,7 +38,7 @@ export const Blogs = () => {
       <div className="flex justify-center">
         <div className=" max-w-xl w-full">
           {blogs.map((blog) =>
-          <BlogCard id={String(blog.id)} key={String(blog.id)} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={blog.date}/> 
+          <BlogCard id={String(blog.id)} key={String(blog.id)} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={blog.date} profile={personal.Yes}/> 
         )}
           
 
@@ -45,4 +46,4 @@ export const Blogs = () => {
       </div>
     </div>
   );
-};
+}

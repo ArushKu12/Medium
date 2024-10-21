@@ -4,6 +4,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
 import { createBlog,updateBlog } from "@arush_012/medium-common";
 import { auth } from "hono/utils/basic-auth";
+import { number, string } from "zod";
 
 export const blogRouter = new Hono<{
     Bindings:{
@@ -129,6 +130,7 @@ blogRouter.get('/bulk', async (c) => {
             id:true,
             title:true,
             content:true,
+            date:true,
             author:{
                 select:{
                     name:true
@@ -155,6 +157,17 @@ blogRouter.get("/personal", async (c) => {
             where:{
                 author:{
                     id:Number(authorId)
+                }
+            },
+            select:{
+                id:true,
+                title:true,
+                content:true,
+                date:true,
+                author:{
+                    select:{
+                        name:true
+                    }
                 }
             }
         })
@@ -190,6 +203,7 @@ blogRouter.get('/:id',async (c) => {
                 id:true,
                 title:true,
                 content:true,
+                date:true,
                 author:{
                     select:{
                         name:true
@@ -211,4 +225,47 @@ blogRouter.get('/:id',async (c) => {
     }
     
   })
+
+blogRouter.delete("/delete/:id",async (c) => {
+    const id = c.req.param("id");
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+      }).$extends(withAccelerate())
+    
+    try {
+        const blogtoDelete = await prisma.blog.findFirst({
+            where:{
+                id: Number(id),
+                authorId:Number(c.get('userId'))
+            }
+        })
+
+        if(blogtoDelete){
+            const deletedBlog = await prisma.blog.delete({
+                where:{
+                    id: blogtoDelete.id
+                }
+            })
+        }else{
+            c.status(411)
+            return c.json({
+                success:false,
+                message:"Blog Not found in DataBase"
+            })
+        }
+
+        c.status(200)
+        return c.json({
+            success:true,
+            message:"Blog Successfully Deleted"
+        })
+    } catch (error) {
+        c.status(403)
+        return c.json({
+            success:false,
+            message:"Unable to delete Blog"
+        })
+    }
+
+})
 //Todo: add pagination

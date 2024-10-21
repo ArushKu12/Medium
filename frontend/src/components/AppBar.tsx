@@ -19,7 +19,7 @@ export const AppBar = () => {
 
 
   return (
-    <div className="flex justify-between w-full px-10 py-1.5 border-b">
+    <div className="flex justify-between w-full w-screen px-10 py-1.5 border-b">
       <Link to="/blogs">
       <div className="text-lg font-semibold">Medium</div>
 
@@ -39,7 +39,7 @@ export const AppBar = () => {
             <ul className="py-1 text-gray-800">
               <li>
                 <Link
-                  to="/myblogs"
+                  to="/personal"
                   className="block px-4 py-2 hover:bg-gray-200"
                 >
                   My Blogs

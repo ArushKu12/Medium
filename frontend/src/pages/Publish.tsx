@@ -1,11 +1,11 @@
 import { ChangeEvent, useState } from "react";
-import { AppBar } from "../components/AppBar";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { createBlog } from "@arush_012/medium-common";
 import { Spinner } from "../components/Spinner";
+import { AppBar } from "../components/AppBar";
 
 export const Publish = () => {
     const [loading,setLoading] = useState(false)
@@ -64,7 +64,7 @@ export const Publish = () => {
 
   return (
     <div>
-      <AppBar />
+      <AppBar/>
       <div className="flex flex-col items-center pt-4">
         <textarea
         name='title'

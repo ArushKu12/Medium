@@ -7,19 +7,26 @@ import { Blog } from './pages/Blog'
 import {Blogs} from "./pages/Blogs"
 import { Publish } from './pages/Publish'
 import PrivateRoute from './components/PrivateRoute'
+import { PersonalBlogs } from './pages/PersonalBlogs'
+
 
 function App() {
   
-
+  
   return (
     <>
-      <Routes>
+    <div className='flex flex-col'>
+      
+    <Routes>
         <Route path='/' element={<SignUp />}></Route>
         <Route path='/signin' element={<SignIn />}></Route>
         <Route path='/blog/:id' element={<PrivateRoute><Blog /></PrivateRoute>}></Route>
         <Route path='/blogs' element={<PrivateRoute><Blogs /></PrivateRoute>}></Route>
         <Route path='/publish' element={<PrivateRoute><Publish /></PrivateRoute>} ></Route>
+        <Route path='/personal' element={<PrivateRoute><PersonalBlogs /></PrivateRoute>} ></Route>
       </Routes>
+    </div>
+      
     </>
   )
 }

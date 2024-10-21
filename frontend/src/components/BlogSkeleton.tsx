@@ -1,7 +1,7 @@
 export const BlogSkeleton = () => {
   return (
     <div>
-      <div role="status" className="max-w-sm animate-pulse pt-10">
+      <div role="status" className="max-w-sm animate-pulse">
       <div className="border-b py-4">
       <div className="flex">
         <div>

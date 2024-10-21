@@ -3,6 +3,9 @@ import { Avatar } from "./BlogCard"
 
 export const FullBlog = ({blog} : {blog : Blog}) => {
 
+    const date = blog.date ? blog.date.split("T")[0] : "Unknown Date"
+  const time = blog.date ? blog.date.split("T")[1].split('.')[0] : ""
+
     return <div className="flex justify-center">
             <div className="grid grid-cols-12 px-10 max-w-screen-xl border-b-2">
     <div className="col-span-8 py-4 ">
@@ -11,7 +14,7 @@ export const FullBlog = ({blog} : {blog : Blog}) => {
 
         </div>
         <div className="font-medium text-gray-500 pt-4 pb-5">
-            Posted on 2nd December 2023
+            Posted on {`${date} ${time}`}
         </div>
         <div className="text-gray-700 text-lg">
             {blog.content}

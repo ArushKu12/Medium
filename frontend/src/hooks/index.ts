@@ -7,6 +7,7 @@ export interface Blog {
     "id": number,
     "title": string,
     "content": string,
+    "date":string
     "author": {
         "name": string
     }
@@ -35,6 +36,29 @@ export const useBlog = ({id} : { id: string }) => {
     }
 }
 
+export const usePersonalBlogs = () => {
+    const[loading,setLoading] = useState(true);
+    const [blogs,setBlogs] = useState<Blog[]>([])
+
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/blog/personal`,{
+            headers:{
+                Authorization:localStorage.getItem('token')
+            }
+        })
+        .then(response => {
+           
+            setBlogs(response.data.blogs)
+            setLoading(false)
+        }) 
+    },[])
+
+    return {
+        loading,
+        blogs
+    }
+}
+
 export const useBlogs = () => {
     const[loading,setLoading] = useState(true);
     const [blogs,setBlogs] = useState<Blog[]>([])
@@ -46,6 +70,7 @@ export const useBlogs = () => {
             }
         })
         .then(response => {
+           
             setBlogs(response.data.blogs)
             setLoading(false)
         }) 
