@@ -16,7 +16,7 @@ export const FullBlog = ({blog} : {blog : Blog}) => {
         <div className="font-medium text-gray-500 pt-4 pb-5">
             Posted on {`${date} ${time}`}
         </div>
-        <div className="text-gray-700 text-lg">
+        <div className="text-gray-700 text-lg" dangerouslySetInnerHTML={{ __html: blog.content }}>
             {blog.content}
         </div>
     </div>
