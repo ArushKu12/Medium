@@ -49,7 +49,7 @@ blogRouter.post('/', async (c) => {
     if(!success){
       c.status(411);
       return c.json({
-        message:"Incorrect Username or Password"
+        message:"Incorrect Blog Format"
       })
     }
     try {

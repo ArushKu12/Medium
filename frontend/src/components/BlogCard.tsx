@@ -79,8 +79,8 @@ export const BlogCard = ({
         </div>
         <Link  to={`/blog/${id}`}>
       <div className="text-2xl font-semibold pt-2">{title}</div>
-      <div className="font-thin py-2">
-        {content.length > 100 ? `${content.slice(0, 100)} ...` : content}
+      <div dangerouslySetInnerHTML={{ __html: `${content.length > 100 ? `${content.slice(0, 100)} ...` : content}` }} className="font-thin py-2">
+        
       </div>
       <div className="">{`${Math.ceil(content.length / 100)} minute(s) read`}</div>
       </Link>

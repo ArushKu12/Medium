@@ -5,9 +5,9 @@ import { SignUp } from './pages/SignUp'
 import { SignIn } from './pages/SignIn'
 import { Blog } from './pages/Blog'
 import {Blogs} from "./pages/Blogs"
-import { Publish } from './pages/Publish'
 import PrivateRoute from './components/PrivateRoute'
 import { PersonalBlogs } from './pages/PersonalBlogs'
+import { Publish } from './pages/Publish'
 
 
 function App() {

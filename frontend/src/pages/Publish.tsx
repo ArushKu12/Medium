@@ -3,33 +3,44 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { createBlog } from "@arush_012/medium-common";
 import { Spinner } from "../components/Spinner";
 import { AppBar } from "../components/AppBar";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 
 export const Publish = () => {
     const [loading,setLoading] = useState(false)
-  const[blog,setBlog] = useState<createBlog>({
-    title:"",
-    content:""
-  });
+  const[title,setTitle] = useState("");
+  const [ content,setContent] = useState("")
     const navigate = useNavigate()
 
+    const modules = {
+      toolbar: {
+        container: [
+          [{ 'header': [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          ['link', 'image'],                    // add link and image options
+          [{ 'align': [] }],                      // text alignment
+          ['clean']       
+          
+        ],
+        
+      }
+    };
 
-    function handleInputChange (e : ChangeEvent<HTMLTextAreaElement> ) {
-        const {name,value} = e.target;
-        setBlog({...blog,[name] : value})
 
-    }
+
+    
   async function publishBlog () {
     setLoading(true)
-    if(blog.content.length == 0 || blog.title.length == 0){
+    if(content.length == 0 || title.length == 0){
         setLoading(false)
         toast.error("Cannot publish Empty Blogs")
     }
     else{
         try {
-            const response = await axios.post(`${BACKEND_URL}/api/v1/blog`,{title:blog.title,content:blog.content},{
+            const response = await axios.post(`${BACKEND_URL}/api/v1/blog`,{title:title,content:content},{
                 headers:{
                     Authorization: localStorage.getItem('token')
                 }
@@ -70,15 +81,22 @@ export const Publish = () => {
         name='title'
           className="w-screen max-w-screen-xl block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
           placeholder="Write your title of the blog here..."
-          onChange={handleInputChange}
+          onChange={(e) => {setTitle(e.target.value)}}
         ></textarea>
+        <div className="max-w-screen-xl w-full pt-[1.5vw]">
+        <ReactQuill
+        value={content}
+        onChange={setContent}
+        modules={modules}
+        placeholder="Write your blog here..."
+        className="w-full"
+        
+      />
+          </div>
 
-        <TextArea
-          onChange={handleInputChange}
-          value={blog.content}
-        />
+        
 
-        <div className="flex justify-start w-full max-w-screen-xl">
+        <div className="flex justify-start w-full max-w-screen-xl pt-[1vw]">
           <button
             type="submit"
             className="py-2.5 px-4 text-xs font-medium  text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800"
