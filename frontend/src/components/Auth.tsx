@@ -76,7 +76,7 @@ export const Auth = ({type} : {type:"signup" | "signin"}) => {
                 })
             }} />
 
-            <button onClick={SendRequest} type="button" className="mt-[0.6rem] w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg 
+            <button onClick={SendRequest} type="button" className="mt-[0.6rem] w-full text-gray-900 bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-300 hover:to-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg 
             text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" >
                 {type === "signup" ? "Sign Up" : "Sign In"}
                 </button>
