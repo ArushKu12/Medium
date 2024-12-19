@@ -82,7 +82,7 @@ export const BlogCard = ({
       <div dangerouslySetInnerHTML={{ __html: `${content.length > 100 ? `${content.slice(0, 100)} ...` : content}` }} className="font-thin py-2">
         
       </div>
-      <div className="">{`${Math.ceil(content.length / 100)} minute(s) read`}</div>
+      <div className="">{`${Math.ceil(content.length / 1000)} minute(s) read`}</div>
       </Link>
     </div>
     

@@ -88,6 +88,7 @@ export const Publish = () => {
         value={content}
         onChange={setContent}
         modules={modules}
+        
         placeholder="Write your blog here..."
         className="w-full"
         

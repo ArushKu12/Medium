@@ -12,6 +12,8 @@ model User {
   id Int @id @default(autoincrement())
   name String?
   username String @unique
+  description String @default("")
+  pic String @default("")
   password String
   blogs Blog[]
 }
