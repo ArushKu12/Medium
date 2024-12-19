@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import {  useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import toast from "react-hot-toast";
@@ -123,26 +123,26 @@ export const Publish = () => {
   );
 };
 
-function TextArea({
-  onChange,
-  value
-}: {
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void,
-  value:string
-}) {
-  return (
-    <div>
-      <div className="w-screen max-w-screen-xl mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-4">
-          <textarea
-            name="content"
-            className="w-full px-3 text-sm text-gray-900 bg-white border-0 h-40  py-1 text-xl focus:ring-0 "
-            placeholder="Write your Blog..."
-            onChange={onChange}
-            value={value}
-            required
-          ></textarea>
+// function TextArea({
+//   onChange,
+//   value
+// }: {
+//   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void,
+//   value:string
+// }) {
+//   return (
+//     <div>
+//       <div className="w-screen max-w-screen-xl mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-4">
+//           <textarea
+//             name="content"
+//             className="w-full px-3 text-sm text-gray-900 bg-white border-0 h-40  py-1 text-xl focus:ring-0 "
+//             placeholder="Write your Blog..."
+//             onChange={onChange}
+//             value={value}
+//             required
+//           ></textarea>
         
-      </div>
-    </div>
-  );
-}
+//       </div>
+//     </div>
+//   );
+// }
