@@ -3,7 +3,7 @@ import { Avatar } from "./BlogCard";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export const AppBar = () => {
+export const AppBar = ({name} : any) => {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -30,7 +30,7 @@ export const AppBar = () => {
 
         </Link>
         <div onClick={toggleDropdown} className="cursor-pointer">
-        <Avatar name="Arush" size="big" />
+        <Avatar name={name} size="big" />
         </div>
         
 
