@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ export const Publish = () => {
   const[title,setTitle] = useState("");
   const [ content,setContent] = useState("")
     const navigate = useNavigate()
+    const [name , setName] = useState('')
 
     const modules = {
       toolbar: {
@@ -29,7 +30,23 @@ export const Publish = () => {
       }
     };
 
+    useEffect(() => {
+      (async () => {
+        try {
+          const response = await axios.get(`${BACKEND_URL}/api/v1/blog/profile`,{
+            headers:{
+                Authorization:localStorage.getItem('token')
+            }
+        });
 
+          if(response.data.success){
+            setName(response.data.name)
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      })()
+    },[])
 
     
   async function publishBlog () {
@@ -62,7 +79,7 @@ export const Publish = () => {
 
   if(loading){
     return  <div>
-    <AppBar />
+    <AppBar name={name}/>
     <div className="flex flex-col justify-center items-center h-[80vh] w-screen ">
     <div className="font-semibold">
         Publishing...
@@ -75,7 +92,7 @@ export const Publish = () => {
 
   return (
     <div>
-      <AppBar/>
+      <AppBar name={name}/>
       <div className="flex flex-col items-center pt-4">
         <textarea
         name='title'

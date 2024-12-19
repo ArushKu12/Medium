@@ -1,15 +1,36 @@
+import { useEffect, useState } from "react";
 import { AppBar } from "../components/AppBar";
 import { BlogCard, personal } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { usePersonalBlogs } from "../hooks";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 export const PersonalBlogs = () => {
 
     const {loading,blogs} = usePersonalBlogs()
+    const [name, setName] = useState('')
+    useEffect(() => {
+      (async () => {
+        try {
+          const response = await axios.get(`${BACKEND_URL}/api/v1/blog/profile`,{
+            headers:{
+                Authorization:localStorage.getItem('token')
+            }
+        });
+
+          if(response.data.success){
+            setName(response.data.name)
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      })()
+    })
 
     if(loading){
         return <div className="">
-          <AppBar  />
+          <AppBar  name={name}/>
           <div className="flex flex-col justify-center items-center h-screen w-screen max-w-screen-xl pt-[23rem]">
             <BlogSkeleton />
             <BlogSkeleton />
@@ -24,7 +45,7 @@ export const PersonalBlogs = () => {
     }
     if(blogs.length == 0){
       return <div>
-        <AppBar />
+        <AppBar name={name} />
         <div className="flex justify-center items-center w-screen h-[80vh] text-3xl font-semibold">
         No Blogs Published, You can be the first
       </div>
@@ -34,7 +55,7 @@ export const PersonalBlogs = () => {
   return (
     <div>
       
-    <AppBar />
+    <AppBar name={name}/>
       <div className="flex justify-center">
         <div className=" max-w-xl w-full">
           {blogs.map((blog) =>

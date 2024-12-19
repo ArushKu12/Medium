@@ -3,7 +3,7 @@ import { Avatar } from "./BlogCard";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export const AppBar = ({name} : any) => {
+export const AppBar = ({name} : {name:string}) => {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 

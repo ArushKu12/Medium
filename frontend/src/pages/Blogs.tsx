@@ -13,7 +13,11 @@ export const Blogs = () => {
     useEffect(() => {
       (async () => {
         try {
-          const response = await axios.get(`${BACKEND_URL}/api/v1/blog/profile`);
+          const response = await axios.get(`${BACKEND_URL}/api/v1/blog/profile`,{
+            headers:{
+                Authorization:localStorage.getItem('token')
+            }
+        });
 
           if(response.data.success){
             setName(response.data.name)
