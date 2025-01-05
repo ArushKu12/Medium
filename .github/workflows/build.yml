@@ -1,0 +1,29 @@
+name: Building the frontend Only
+
+on: 
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+
+jobs:
+  build:
+    name: Build Frontend
+    runs-on: Ubuntu-latest
+    steps:
+      - name: Cloning the Repo
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Installing Dependencies
+        working-directory: ./frontend
+        uses: npm install
+
+      - name: Building Project
+        working-directory: ./frontend
+        uses: npm run build

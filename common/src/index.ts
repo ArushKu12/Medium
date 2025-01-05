@@ -22,8 +22,6 @@ export const updateBlog = z.object({
     authorId:z.number()
 })
 
-
-
 export type SignUp = z.infer<typeof SignUp>
 export type SignIn = z.infer<typeof SignIn>
 export type createBlog = z.infer<typeof createBlog>
