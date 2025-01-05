@@ -22,8 +22,8 @@ jobs:
 
       - name: Installing Dependencies
         working-directory: ./frontend
-        uses: npm install
+        run: npm install
 
       - name: Building Project
         working-directory: ./frontend
-        uses: npm run build
+        run: npm run build

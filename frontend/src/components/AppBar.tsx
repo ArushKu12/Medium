@@ -57,4 +57,6 @@ export const AppBar = ({name} : {name:string}) => {
       </div>
     </div>
   );
+
+  
 };
